@@ -407,21 +407,48 @@
       const count = document.getElementById("member-count");
       const caption = document.getElementById("member-caption");
       const status = document.getElementById("member-status");
+
+      if (!count || !caption) {
+        console.error("メンバー数表示欄が見つかりません");
+        return;
+      }
+
       try {
-        const response = await fetch("https://discord.com/api/v10/invites/marukichi?with_counts=true");
-        if (!response.ok) throw new Error("Invite information unavailable");
+        const response = await fetch(
+          "https://discord.com/api/v10/invites/marukichi?with_counts=true"
+        );
+
+        if (!response.ok) {
+          throw new Error("Discord API HTTP " + response.status);
+        }
+
         const data = await response.json();
         const members = data.approximate_member_count;
-        if (typeof members !== "number") throw new Error("Member count unavailable");
+
+        if (typeof members !== "number") {
+          throw new Error("メンバー数を取得できません");
+        }
+
         count.textContent = members.toLocaleString("ja-JP");
         caption.textContent = "人が参加しているよ☆";
-        status.textContent = "Discordの公開招待情報より取得";
+
+        if (status) {
+          status.innerHTML =
+            '<span class="status-dot"></span> Discordから取得しました';
+        }
+
       } catch (error) {
-        count.textContent = "☆";
-        caption.textContent = "一緒にメンバーを増やしていこう！";
-        status.textContent = "人数の自動取得は現在利用できません";
+        console.error("メンバー数取得エラー:", error);
+
+        count.textContent = "—";
+        caption.textContent = "メンバー数を取得できませんでした";
+
+        if (status) {
+          status.textContent = "Discordとの接続を確認してください";
+        }
       }
     }
+
     loadMemberCount();
 
     // スクロールに合わせてカードをふんわり表示します。
