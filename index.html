@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff4b8">
+  <meta name="description" content="まるきち鯖☆の公式ホームページ">
+  <title>まるきち鯖☆</title>
+  <style>
+    :root {
+      --butter: #fff4b8;
+      --sun: #ffd84d;
+      --gold: #f5b82e;
+      --cream: #fffdf3;
+      --ink: #51452f;
+      --muted: #897957;
+      --pink: #ff9eb5;
+      --line: #f0df9d;
+      --shadow: 0 14px 34px rgba(154, 119, 35, .11);
+      --content: 1080px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 86px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Hiragino Maru Gothic ProN", "Yu Gothic UI", Meiryo, sans-serif;
+      line-height: 1.8;
+      background:
+        radial-gradient(circle at 8% 10%, rgba(255,216,77,.28) 0 3px, transparent 4px),
+        radial-gradient(circle at 92% 22%, rgba(255,158,181,.2) 0 4px, transparent 5px),
+        linear-gradient(180deg, #fff9dc 0%, #fffdf5 48%, #fff7d8 100%);
+      background-size: 42px 42px, 58px 58px, auto;
+      overflow-x: hidden;
+    }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .page { width: min(var(--content), calc(100% - 36px)); margin: 0 auto; }
+    .site-header {
+      position: sticky; top: 0; z-index: 20;
+      border-bottom: 1px solid rgba(232, 204, 117, .55);
+      background: rgba(255, 251, 229, .88);
+      backdrop-filter: blur(14px);
+    }
+    .nav-inner {
+      width: min(var(--content), calc(100% - 36px)); min-height: 68px;
+      margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 18px;
+    }
+    .brand {
+      display: inline-flex; align-items: center; gap: 9px;
+      color: #76591e; text-decoration: none; font-weight: 1000; font-size: 1.12rem;
+      white-space: nowrap;
+    }
+    .brand-mark {
+      display: grid; place-items: center; width: 38px; height: 38px;
+      border-radius: 13px; background: linear-gradient(145deg, #ffe982, #ffc94b);
+      box-shadow: 0 4px 0 #e6b83f; font-size: 1.2rem;
+    }
+    .nav-links { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 5px; }
+    .nav-links a {
+      padding: 8px 11px; border-radius: 999px; color: #80652c;
+      text-decoration: none; font-size: .84rem; font-weight: 800; transition: .2s;
+    }
+    .nav-links a:hover { background: #fff0b8; transform: translateY(-2px); }
+    .nav-links .nav-join { background: #f5c642; color: #624915; padding-inline: 15px; }
+
+    .hero {
+      position: relative; isolation: isolate; overflow: hidden;
+      margin: 28px auto 0; padding: clamp(54px, 9vw, 100px) 22px 76px;
+      text-align: center; border: 2px solid rgba(255,255,255,.92); border-radius: 38px;
+      /* images/top-background.png をトップ背景として読み込みます */
+      background-image:
+        linear-gradient(rgba(255,255,255,.76), rgba(255,255,255,.76)),
+        url("images/top-background.png");
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-color: #fff2b5;
+      box-shadow: var(--shadow);
+    }
+    .hero::before, .hero::after {
+      content: "✦"; position: absolute; z-index: -1; color: rgba(255,255,255,.82);
+      font-size: clamp(55px, 8vw, 100px); line-height: 1;
+      animation: twinkle 3.8s ease-in-out infinite;
+    }
+    .hero::before { left: 8%; top: 17%; }
+    .hero::after { right: 9%; bottom: 18%; font-size: 65px; animation-delay: 1.2s; }
+    .eyebrow {
+      display: inline-block; margin-bottom: 15px; padding: 6px 17px;
+      color: #8d6a18; background: rgba(255,255,255,.72);
+      border: 1px solid rgba(245,184,46,.35); border-radius: 999px;
+      font-size: .78rem; font-weight: 900; letter-spacing: .16em;
+    }
+    h1 {
+      margin: 0; color: #73551b; font-size: clamp(2.5rem, 8vw, 5.2rem);
+      line-height: 1.2; letter-spacing: .035em;
+      text-shadow: 0 4px 0 rgba(255,255,255,.85);
+    }
+    .hero-lead { margin: 18px 0 4px; color: #94691b; font-weight: 900; font-size: clamp(1.1rem, 3vw, 1.55rem); }
+    .hero-note { margin: 0 auto; color: #806d48; font-size: .98rem; }
+    .hero-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 27px; }
+    .button {
+      display: inline-flex; justify-content: center; align-items: center; gap: 8px;
+      min-height: 48px; padding: 11px 23px; border-radius: 999px;
+      text-decoration: none; font-weight: 900; transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .button-primary { background: #f5c642; color: #624915; box-shadow: 0 5px 0 #d9a82b; }
+    .button-secondary { background: rgba(255,255,255,.8); color: #80601d; border: 1px solid #efd88d; }
+    .button:hover { transform: translateY(-3px); }
+    .button-primary:hover { background: #ffda65; box-shadow: 0 7px 0 #d9a82b; }
+
+    .floating {
+      position: absolute; z-index: -1; pointer-events: none; opacity: .78;
+      animation: floaty var(--duration, 7s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+      filter: drop-shadow(0 4px 3px rgba(180,130,30,.08));
+    }
+    .float-1 { left: 12%; bottom: 12%; font-size: 27px; --duration: 7s; }
+    .float-2 { right: 15%; top: 13%; font-size: 23px; --duration: 8s; --delay: -2s; }
+    .float-3 { left: 25%; top: 12%; font-size: 17px; --duration: 6s; --delay: -1s; }
+    .float-4 { right: 25%; bottom: 12%; font-size: 20px; --duration: 9s; --delay: -3s; }
+
+    .section { padding: 64px 0 0; }
+    .section-heading { margin: 0 0 9px; text-align: center; color: #80601d; font-size: clamp(1.55rem, 4vw, 2.15rem); }
+    .section-sub { margin: 0 auto 28px; text-align: center; color: var(--muted); font-size: .94rem; }
+    .heading-star { color: #efb92e; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px; }
+    .card {
+      position: relative; padding: 25px; border: 1px solid var(--line); border-radius: 24px;
+      background: rgba(255,255,255,.93); box-shadow: var(--shadow);
+    }
+    .card h3 { margin: 0 0 9px; color: #80601d; font-size: 1.12rem; }
+    .card p { margin: 7px 0; color: #776849; font-size: .94rem; }
+    .feature-icon {
+      display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 13px;
+      border-radius: 16px; background: #fff2bd; font-size: 1.45rem;
+    }
+    .about-wide { display: grid; grid-template-columns: 1.2fr .8fr; gap: 18px; align-items: stretch; }
+    .about-note { background: linear-gradient(145deg, #fffef8, #fff6d9); }
+    .tag {
+      display: inline-block; margin: 5px 5px 0 0; padding: 5px 11px;
+      border-radius: 999px; background: #fff4cb; color: #8b681f; font-size: .8rem; font-weight: 800;
+    }
+    .stat-card {
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      min-height: 210px; text-align: center; background: linear-gradient(145deg, #fff6c9, #fffdf4);
+    }
+    .stat-label { color: #90743d; font-weight: 800; font-size: .9rem; }
+    .stat-number { margin: 4px 0; color: #8a641c; font-size: clamp(2.4rem, 6vw, 3.7rem); font-weight: 1000; line-height: 1.2; }
+    .stat-caption { color: #9b875d; font-size: .8rem; }
+    .status { display: inline-flex; align-items: center; gap: 7px; margin-top: 12px; color: #8a762f; font-size: .82rem; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #e7b93b; box-shadow: 0 0 0 4px rgba(231,185,59,.16); }
+    .word-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .word-list li { padding: 13px 15px; border: 1px solid #f5e8b9; border-radius: 15px; background: #fffdf5; color: #776849; }
+    .word-list strong { color: #a87516; }
+    code { padding: 4px 9px; border: 1px solid #f1d77c; border-radius: 8px; background: #fff5c9; color: #9b6812; font-family: inherit; font-weight: 900; white-space: nowrap; }
+    .event-card { overflow: hidden; }
+    .event-top {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      margin: -25px -25px 18px; padding: 13px 20px; background: #fff3c1;
+      color: #8a681f; font-size: .82rem; font-weight: 900;
+    }
+    .event-badge { padding: 3px 9px; border-radius: 999px; background: white; }
+    .event-empty { border: 1px dashed #e8d58e; background: rgba(255,255,255,.68); }
+    .event-empty .feature-icon { background: #fff1c1; }
+    .event-footnote { margin-top: 18px; text-align: center; color: #927d50; font-size: .85rem; }
+
+    .admins { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px; }
+    .admin-card { text-align: center; padding-top: 28px; }
+    .admin-avatar {
+      display: grid; place-items: center; width: 76px; height: 76px; margin: 0 auto 13px;
+      border: 4px solid #fff; border-radius: 50%; background: linear-gradient(145deg, #ffe98e, #ffd3a2);
+      box-shadow: 0 0 0 2px #f1d77c; font-size: 2rem;
+      overflow: hidden;
+    }
+    .admin-avatar img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .admin-card:nth-child(2) .admin-avatar { background: linear-gradient(145deg, #ffe5ed, #fff0bd); }
+    .admin-card:nth-child(3) .admin-avatar { background: linear-gradient(145deg, #dff3c5, #fff0bd); }
+    .admin-role { display: inline-block; padding: 3px 10px; border-radius: 999px; background: #fff4cb; color: #8b681f; font-size: .75rem; font-weight: 900; }
+
+    .rules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; padding: 0; margin: 0; list-style: none; counter-reset: rules; }
+    .rules li {
+      counter-increment: rules; display: flex; align-items: center; gap: 11px; min-height: 60px;
+      padding: 12px 14px; border: 1px solid #f0df9d; border-radius: 16px;
+      background: rgba(255,255,255,.9); color: #695a3d; font-weight: 800;
+    }
+    .rules li::before {
+      content: counter(rules); display: grid; flex: 0 0 29px; width: 29px; height: 29px;
+      place-items: center; border-radius: 50%; background: #ffe48a; color: #785a1b; font-size: .86rem;
+    }
+    .rules-panel { background: linear-gradient(145deg, #fffef8, #fff8dc); }
+    .contact-note { margin-top: 17px; padding: 13px 16px; border-radius: 14px; background: #fff0d5; color: #765a2c; font-weight: 800; }
+
+    .join-section { padding: 66px 0 60px; }
+    .join-card {
+      padding: clamp(30px, 6vw, 48px) 20px; text-align: center;
+      border: 2px solid #f3d36f; border-radius: 30px;
+      background: linear-gradient(135deg, #fff8d9, #fff 55%, #fff0cf);
+      box-shadow: 0 14px 34px rgba(180,135,35,.13);
+    }
+    .join-card h2 { margin: 0 0 8px; color: #80601d; font-size: clamp(1.4rem, 4vw, 1.9rem); }
+    .join-card p { margin: 5px 0 20px; color: var(--muted); }
+    .join-card .button { min-width: 245px; }
+
+    footer { padding: 27px 18px 32px; text-align: center; border-top: 1px solid #f0dfaa; color: #9b7b3b; background: rgba(255,250,226,.7); }
+    footer strong { color: #80601d; }
+    footer small { display: block; margin-top: 5px; color: #b29b6b; }
+
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    @keyframes floaty { 0%,100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-17px) rotate(7deg); } }
+    @keyframes twinkle { 0%,100% { opacity: .55; transform: scale(.9) rotate(-8deg); } 50% { opacity: 1; transform: scale(1.12) rotate(8deg); } }
+
+    @media (max-width: 760px) {
+      .nav-inner { align-items: flex-start; flex-direction: column; gap: 5px; padding: 10px 0; }
+      .nav-links { justify-content: flex-start; width: 100%; }
+      .nav-links a { padding: 6px 9px; font-size: .78rem; }
+      .grid { grid-template-columns: 1fr 1fr; }
+      .about-wide { grid-template-columns: 1fr; }
+      .admins { gap: 10px; }
+      .admin-card { padding: 20px 12px; }
+    }
+    @media (max-width: 540px) {
+      .page { width: min(100% - 22px, var(--content)); }
+      .hero { margin-top: 14px; padding: 54px 17px 48px; border-radius: 27px; }
+      .grid, .admins, .rules { grid-template-columns: 1fr; }
+      .section { padding-top: 48px; }
+      .card { padding: 21px; }
+      .event-top { margin: -21px -21px 16px; }
+      .hero::before { left: 4%; }
+      .hero::after { right: 4%; }
+      .join-card .button { width: 100%; min-width: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-inner">
+      <a class="brand" href="#top"><span class="brand-mark">☀</span>まるきち鯖☆</a>
+      <nav class="nav-links" aria-label="メインメニュー">
+        <a href="#about">サーバー紹介</a>
+        <a href="#features">楽しみ方</a>
+        <a href="#events">イベント</a>
+        <a href="#admins">管理者</a>
+        <a href="#rules">ルール</a>
+        <a class="nav-join" href="https://discord.gg/marukichi" target="_blank" rel="noopener noreferrer">参加する ☆</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top" class="page">
+    <section class="hero">
+      <div class="eyebrow">WELCOME TO MARUKICHI</div>
+      <h1>まるきち鯖☆</h1>
+      <p class="hero-lead">まるきち鯖について教えてあげる！</p>
+      <p class="hero-note">自由に、楽しく、みんなで過ごせるあったかい場所☆</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="https://discord.gg/marukichi" target="_blank" rel="noopener noreferrer">💛 サーバーに参加する</a>
+        <a class="button button-secondary" href="#about">サーバーについて見る ↓</a>
+      </div>
+    </section>
+
+    <section class="section reveal" id="about">
+      <h2 class="section-heading"><span class="heading-star">✦</span> まるきち鯖ってどんなところ？ <span class="heading-star">✦</span></h2>
+      <p class="section-sub">はじめましての人も、いつものみんなも大歓迎☆</p>
+      <div class="about-wide">
+        <article class="card about-note">
+          <h3>みんなでつくる、あったかい居場所</h3>
+          <p>このサーバーは、<strong>誰でも大歓迎！自由に楽しく過ごせる、あったかいサーバー</strong>だにょ☆（ため口とかもおっけー！）</p>
+          <p>雑談したり、ゲームで遊んだり、自分のペースで気軽に過ごしてね。</p>
+          <div>
+            <span class="tag">誰でも大歓迎</span><span class="tag">雑談</span><span class="tag">ゲーム</span><span class="tag">気軽に交流</span>
+          </div>
+        </article>
+        <article class="card stat-card">
+          <div class="stat-label">まるきち鯖☆ メンバー</div>
+          <div class="stat-number" id="member-count" aria-live="polite">---</div>
+          <div class="stat-caption" id="member-caption">メンバー数を確認しています…</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal" id="features">
+      <h2 class="section-heading"><span class="heading-star">✦</span> サーバーの楽しみ方 <span class="heading-star">✦</span></h2>
+      <p class="section-sub">まるきち鯖☆の楽しみ方</p>
+      <div class="grid">
+        <article class="card">
+          <div class="feature-icon">💬</div>
+          <h3>しゃべる！</h3>
+          <p>みんなで楽しくゆるーく喋ったり、興味のある事を語ったり自由にしゃべれるよ！</p>
+        </article>
+        <article class="card">
+          <div class="feature-icon">🪙</div>
+          <h3>お金とゲーム機能</h3>
+          <p><code>/カジノヘルプ</code> でゲーム一覧をチェック！お金を集めて大富豪を目指そう☆<br>お金は100メッセージにつき500円配布されるよ☆</p>
+        </article>
+        <article class="card">
+          <div class="feature-icon">👾</div>
+          <h3>マイクラ</h3>
+          <p>まるきち鯖にはレルムズがあってみんなで楽しくマイクラをしているよ☆楽しいサバイバルを一緒にしよう！</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal" id="events">
+      <h2 class="section-heading"><span class="heading-star">✦</span> イベント・お知らせ <span class="heading-star">✦</span></h2>
+      <p class="section-sub">サーバー内のお楽しみ情報をチェック！</p>
+      <div class="grid">
+        <article class="card event-card event-empty">
+          <div class="event-top"><span>EVENT</span><span class="event-badge">開催情報</span></div>
+          <div class="feature-icon">🎉</div>
+          <h3>イベント情報</h3>
+          <p>開催予定や参加方法は、Discordサーバー内のお知らせを確認してね☆</p>
+        </article>
+        <article class="card event-card event-empty">
+          <div class="event-top"><span>NEWS</span><span class="event-badge">最新情報</span></div>
+          <div class="feature-icon">📢</div>
+          <h3>サーバーからのお知らせ</h3>
+          <p>新しいお知らせや大事な連絡は、サーバー内で案内するよ☆</p>
+        </article>
+        <article class="card event-card event-empty">
+          <div class="event-top"><span>JOIN</span><span class="event-badge">参加方法</span></div>
+          <div class="feature-icon">🌟</div>
+          <h3>イベントに参加しよう</h3>
+          <p>気になる企画を見つけたら、案内に沿って気軽に参加してね！</p>
+        </article>
+      </div>
+      <p class="event-footnote">※ 現在、具体的な開催日時・イベント名は掲載していません。最新情報はDiscord内で確認してね。</p>
+    </section>
+
+    <section class="section reveal" id="admins">
+      <h2 class="section-heading"><span class="heading-star">✦</span> 管理者紹介 <span class="heading-star">✦</span></h2>
+      <p class="section-sub">困ったことがあったら、いつでも相談してね☆</p>
+      <div class="admins">
+        <article class="card admin-card">
+          <div class="admin-avatar">
+            <img src="images/admin-chiihaya.gif" alt="ちいはやのプロフィール画像">
+          </div>
+          <h3>ちいはや</h3>
+          <span class="admin-role">管理者</span>
+          <p>サーバーのことで困ったら気軽に相談してね☆</p>
+        </article>
+        <article class="card admin-card">
+          <div class="admin-avatar">
+            <img src="images/admin-konata.png" alt="こなたのプロフィール画像">
+          </div>
+          <h3>こなた</h3>
+          <span class="admin-role">管理者</span>
+          <p>困ったことや気になることがあれば相談してね☆</p>
+        </article>
+        <article class="card admin-card">
+          <div class="admin-avatar">
+            <img src="images/admin-tako.png" alt="たこのプロフィール画像">
+          </div>
+          <h3>たこ</h3>
+          <span class="admin-role">管理者</span>
+          <p>みんなが安心して過ごせるようにサポートするよ☆</p>
+        </article>
+      </div>
+      <p class="event-footnote">※ 管理者画像は images フォルダー内の画像ファイルを読み込みます。</p>
+    </section>
+
+    <section class="section reveal" id="rules">
+      <h2 class="section-heading"><span class="heading-star">✦</span> みんなで守るルール <span class="heading-star">✦</span></h2>
+      <p class="section-sub">みんなが安心して楽しめる場所にするために☆</p>
+      <div class="card rules-panel">
+        <ol class="rules">
+          <li>仲良くする（冷笑禁止）☆</li>
+          <li>嫌なことをしない☆</li>
+          <li>迷惑行為をしない☆</li>
+          <li>嫌なことがあったら管理人に言う☆</li>
+        </ol>
+        <div class="contact-note">管理者：ちいはや・こなた・たこ<br>嫌なことや困ったことがあったら、ひとりで抱え込まずに相談してね。</div>
+      </div>
+    </section>
+
+    <section class="join-section reveal">
+      <div class="join-card">
+        <h2>まるきち鯖☆で待ってるよ！</h2>
+        <p>気になったら、ぜひ遊びに来てね☆</p>
+        <a class="button button-primary" href="https://discord.gg/marukichi" target="_blank" rel="noopener noreferrer">⭐ Discordサーバーに参加する ⭐</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>☀ まるきち鯖☆</strong>
+    <small>みんなで、たのしい時間をつくっていこうね。</small>
+    <small>© まるきち鯖☆</small>
+  </footer>
+
+  <script>
+    // Discord招待リンクの公開情報から、おおよそのメンバー数を取得します。
+    // Discord側の制限や通信状況により取得できない場合は、案内表示に切り替わります。
+    async function loadMemberCount() {
+      const count = document.getElementById("member-count");
+      const caption = document.getElementById("member-caption");
+      const status = document.getElementById("member-status");
+      try {
+        const response = await fetch("https://discord.com/api/v10/invites/marukichi?with_counts=true");
+        if (!response.ok) throw new Error("Invite information unavailable");
+        const data = await response.json();
+        const members = data.approximate_member_count;
+        if (typeof members !== "number") throw new Error("Member count unavailable");
+        count.textContent = members.toLocaleString("ja-JP");
+        caption.textContent = "人が参加しているよ☆";
+        status.textContent = "Discordの公開招待情報より取得";
+      } catch (error) {
+        count.textContent = "☆";
+        caption.textContent = "一緒にメンバーを増やしていこう！";
+        status.textContent = "人数の自動取得は現在利用できません";
+      }
+    }
+    loadMemberCount();
+
+    // スクロールに合わせてカードをふんわり表示します。
+    const revealItems = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      revealItems.forEach(item => observer.observe(item));
+    } else {
+      revealItems.forEach(item => item.classList.add("is-visible"));
+    }
+  </script>
+</body>
+</html>
